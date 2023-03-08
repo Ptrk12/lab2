@@ -8,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 
+builder.Services.AddSingleton(typeof(IGenericRepository<Quiz,int>), typeof(MemoryGenericRepository<Quiz, int>));
+builder.Services.AddSingleton(typeof(IGenericRepository<QuizItem,int>), typeof(MemoryGenericRepository<QuizItem, int>));
+builder.Services.AddSingleton(typeof(IGenericRepository<QuizItemUserAnswer,string>), typeof(MemoryGenericRepository<QuizItemUserAnswer, string>));
+builder.Services.AddScoped<IQuizUserService, QuizUserService>();
 
 var app = builder.Build();
 

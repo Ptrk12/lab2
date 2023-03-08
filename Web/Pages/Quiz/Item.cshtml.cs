@@ -21,7 +21,7 @@ namespace BackendLab01.Pages
         public List<string> Answers { get; set; }
         
         [BindProperty]
-        public String UserAnswer { get; set; }
+        public string UserAnswer { get; set; }
         
         [BindProperty]
         public int QuizId { get; set; }
@@ -46,6 +46,12 @@ namespace BackendLab01.Pages
 
         public IActionResult OnPost()
         {
+            var quiz = _userService.FindQuizById(QuizId);
+            _userService.SaveUserAnswerForQuiz(QuizId, 1, ItemId, UserAnswer);
+            if (quiz.Items.Count == ItemId)
+            {
+                return RedirectToPage("Summary", new { quizId = QuizId, itemId = ItemId });
+            }
             return RedirectToPage("Item", new {quizId = QuizId, itemId = ItemId + 1});
         }
     }
